@@ -97,6 +97,10 @@
             }, 225);
         } else {
             running = false;
+            play = document.getElementsByClassName("mat-focus-indicator margin-5 play-button stamp mat-raised-button mat-button-base mat-accent ng-star-inserted")[0];
+            if (play != undefined) {
+                play.click();
+            }
             var gameOver = document.getElementsByClassName("stamp center mat-white-color")[0];
             if (gameOver != undefined) {
                 gameOver.innerHTML = "game won 😉"
