@@ -28,7 +28,7 @@
 
     var running = false;
     setInterval(() => {
-        var equation = document.getElementsByClassName("notranslate height-100 noselect current")[0];
+        var equation = document.getElementsByClassName("notranslate height-100 noselect question-id current")[0];
         var input = document.getElementsByClassName("input-holder width-100")[0];
         if (input == undefined || input == null) {
             input = document.getElementsByClassName("input-holder width-100 hint")[0];
@@ -37,6 +37,7 @@
         var top = document.getElementsByClassName("next-game-question padding-5")[0];
         var keypad = document.getElementsByClassName("keyboard mat-white-color bg-2")[0];
         var play;
+
 
         if (equation != undefined) {
             if (running) {
@@ -58,10 +59,17 @@
             var id = setInterval(() => {
                 if (running) {
                     let raw = equation.innerHTML.replace("×", "*").replace("÷", "/");
+                    console.log(raw);
                     while (raw.includes("<!---->")) {
                         raw = raw.replace("<!---->", "");
                     }
-                    raw = raw.trim();
+                    var num1  = equation.getElementsByClassName("mx-1 ng-star-inserted")[0].innerHTML;
+                    var operation = equation.getElementsByClassName("mx-1 ng-star-inserted")[1].innerHTML;
+                    var num2 = equation.getElementsByClassName("mx-1 ng-star-inserted")[2].innerHTML;
+
+                    raw = `${num1}${operation.replace("×", "*").replace("÷", "/")}${num2}`;
+
+                    console.log(raw);
                     let answer = String(eval(raw));
                     GM_log("answer: " + answer);
 
@@ -89,10 +97,6 @@
             }, 225);
         } else {
             running = false;
-            play = document.getElementsByClassName("mat-focus-indicator margin-5 play-button stamp mat-raised-button mat-button-base mat-accent ng-star-inserted")[0];
-            if (play != undefined) {
-                play.click();
-            }
             var gameOver = document.getElementsByClassName("stamp center mat-white-color")[0];
             if (gameOver != undefined) {
                 gameOver.innerHTML = "game won 😉"
